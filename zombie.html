@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="simple.js">
+        var zombies = [];
+
+        var i = 0;
+
+        while (i < 20)
+        {
+            zombies.push({x: random(totalWidth),
+                        y: random(totalWidth),
+                        speed: random(3,6) });
+            i += 1;
+        }
+
+        function update()
+        {
+            clearScreen();
+        
+            var i = 0;
+
+            if (keyboard.space) 
+            {
+                location.replace("menu.html")
+            }
+
+            while (i < 20)
+            {
+                var zombie = zombies[i];
+                
+                picture(zombie.x, zombie.y, 'zombie.png');
+
+                if (zombie.x < mouse.x)
+                    zombie.x += zombie.speed;
+                else 
+                    zombie.x -= zombie.speed;
+                if (zombie.y < mouse.y)
+                    zombie.y += zombie.speed;
+                else 
+                    zombie.y -= zombie.speed;
+
+
+                window.keyStates = [];
+
+                window.addEventListener('keydown',
+                        function(e) { keyStates[e.keyCode || e.key] = true;} );
+
+                window.addEventListener('keyup', 
+                        function(e) { keyStates[e.keyCode || e.key] = false;} );
+
+                window.key = {
+                    space : 32
+                }
+
+                if ( keyStates[32] == true ) {
+                    zombie.x -= 2
+                    zombie.y -= 2
+                }
+                
+                if (distance(mouse, zombie) < 5)
+                {
+                    location.replace("gameover.html")
+                    stopUpdate();
+                }
+                i += 1;
+            }
+        }
+    </script>
+</body>
+</html>
