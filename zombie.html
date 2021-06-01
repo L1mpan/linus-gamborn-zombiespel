@@ -8,68 +8,50 @@
 </head>
 <body>
     <script src="simple.js">
-        var zombies = [];
+        var zombies = [];   /// skapar listan zombies
 
-        var i = 0;
+        var i = 0;          /// skapar variabeln i som jag senare använder i min while loop
 
-        while (i < 20)
+        while (i < 20)      /// kommer att skapa zombies tills den når 20 st zombies
         {
             zombies.push({x: random(totalWidth),
                         y: random(totalWidth),
-                        speed: random(3,6) });
+                        speed: random(3,6) });  /// slumpar ett tal för varje zombie som bestämmer hur snabbt den ska röra sig
             i += 1;
         }
 
-        function update()
+        function update()   /// uppdate function som kommer att fortsätta att uppdatera vad som finns på skärmen
         {
-            clearScreen();
+            clearScreen();  /// clearScreen tar bort den senaste uppdateringen av allt på skärmen
         
-            var i = 0;
+            var i = 0;      /// skapar variabeln i inuti function update
 
-            if (keyboard.space) 
+            if (keyboard.space) /// laddar in menu.html om man klickar på spacebar
             {
                 location.replace("menu.html")
             }
 
-            while (i < 20)
+            while (i < 20)  /// while loop som körs 20 gånger
             {
-                var zombie = zombies[i];
+                var zombie = zombies[i];                    /// tar en zombie ur listan zombies och använder värdet på i som indexen i listan
                 
-                picture(zombie.x, zombie.y, 'zombie.png');
+                picture(zombie.x, zombie.y, 'zombie.png');  /// sätter ut en zombie 
 
-                if (zombie.x < mouse.x)
+                if (zombie.x < mouse.x)                     /// bestämmer om zombien ska röra sig längs med x eller inte
                     zombie.x += zombie.speed;
                 else 
                     zombie.x -= zombie.speed;
-                if (zombie.y < mouse.y)
+                if (zombie.y < mouse.y)                     /// bestämmer om zombien ska röra sig längs med y eller inte
                     zombie.y += zombie.speed;
                 else 
                     zombie.y -= zombie.speed;
 
-
-                window.keyStates = [];
-
-                window.addEventListener('keydown',
-                        function(e) { keyStates[e.keyCode || e.key] = true;} );
-
-                window.addEventListener('keyup', 
-                        function(e) { keyStates[e.keyCode || e.key] = false;} );
-
-                window.key = {
-                    space : 32
-                }
-
-                if ( keyStates[32] == true ) {
-                    zombie.x -= 2
-                    zombie.y -= 2
-                }
-                
-                if (distance(mouse, zombie) < 5)
+                if (distance(mouse, zombie) < 5)            /// kollar avstånder mellan muspekaren och zombies
                 {
-                    location.replace("gameover.html")
-                    stopUpdate();
+                    location.replace("gameover.html")       /// om man blir tagen så kommer man bli skickad till gameover.html
+                    stopUpdate();                           /// avslutar update functionen
                 }
-                i += 1;
+                i += 1;                                     /// kommer att addera värdet 1 till i varje gång while loopen körs
             }
         }
     </script>
